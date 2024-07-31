@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gross Profit and Margin Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .bold-result {
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        function calculateProfitAndMargin() {
+            const priceExGST = parseFloat(document.getElementById('priceExGST').value) || 0;
+            const vendorCost = parseFloat(document.getElementById('vendorCost').value) || 0;
+            const shippingFee = parseFloat(document.getElementById('shippingFee').value) || 0;
+            const handlingFee = parseFloat(document.getElementById('handlingFee').value) || 0;
+            const referralPercentage = parseFloat(document.getElementById('referralFee').value) || 0;
+            const gst = parseFloat(document.getElementById('gst').value) || 0;
+
+            const miscFee = 0.16 * priceExGST;
+            const sra = 0.02 * priceExGST;
+            const referralFee = (referralPercentage / 100) * priceExGST;
+
+            const totalCost = vendorCost + shippingFee + handlingFee + miscFee + referralFee + gst + sra;
+            const profit = priceExGST - totalCost;
+            const margin = (profit / priceExGST) * 100;
+
+            document.getElementById('miscFee').textContent = `Misc. Fee (16%): $${miscFee.toFixed(2)}`;
+            document.getElementById('sra').textContent = `SRA (2%): $${sra.toFixed(2)}`;
+            document.getElementById('profit').textContent = `Profit: $${profit.toFixed(2)}`;
+            document.getElementById('margin').textContent = `Margin: ${margin.toFixed(2)}%`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Gross Profit and Margin Calculator</h2>
+        <label for="priceExGST">Price Ex GST:</label>
+        <input type="number" id="priceExGST" step="0.01" oninput="calculateProfitAndMargin()">
+
+        <label for="vendorCost">Vendor Cost:</label>
+        <input type="number" id="vendorCost" step="0.01" oninput="calculateProfitAndMargin()">
+
+        <label for="shippingFee">Shipping Fee:</label>
+        <input type="number" id="shippingFee" step="0.01" oninput="calculateProfitAndMargin()">
+
+        <label for="handlingFee">Handling Fee:</label>
+        <input type="number" id="handlingFee" step="0.01" oninput="calculateProfitAndMargin()">
+
+        <label for="referralFee">Referral Fee (% of Price Ex GST):</label>
+        <select id="referralFee" onchange="calculateProfitAndMargin()">
+            <option value="5">5%</option>
+            <option value="6">6%</option>
+            <option value="7">7%</option>
+            <option value="8">8%</option>
+            <option value="9">9%</option>
+            <option value="10">10%</option>
+            <option value="11">11%</option>
+            <option value="12">12%</option>
+            <option value="13">13%</option>
+            <option value="14">14%</option>
+            <option value="15">15%</option>
+            <option value="16">16%</option>
+            <option value="17">17%</option>
+            <option value="18">18%</option>
+            <option value="19">19%</option>
+            <option value="20">20%</option>
+        </select>
+
+        <label for="gst">GST:</label>
+        <input type="number" id="gst" step="0.01" oninput="calculateProfitAndMargin()">
+
+        <div class="result" id="miscFee">Misc. Fee (16%): $0.00</div>
+        <div class="result" id="sra">SRA (2%): $0.00</div>
+        <div class="result bold-result" id="profit">Profit: $0.00</div>
+        <div class="result bold-result" id="margin">Margin: 0.00%</div>
+    </div>
+</body>
+</html>
